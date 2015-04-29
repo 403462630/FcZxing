@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FcScanView">
+        <attr name="autoFocus" format="boolean"/>
+        <attr name="vibrate" format="boolean"/>
+        <attr name="playBeep" format="boolean"/>
+        <attr name="invertScan" format="boolean"/>
+        <attr name="frontLightMode" format="enum">
+            <enum name="on" value="0"/>
+            <enum name="off" value="2"/>
+            <enum name="auto" value="1"/>
+        </attr>
+        <attr name="decodeFormat">
+            <flag name="decode_1D_product" value="1" />
+            <flag name="decode_1D_industrial" value="2" />
+            <flag name="decode_QR" value="4" />
+            <flag name="decode_Data_Matrix" value="8" />
+            <flag name="decode_Aztec" value="16" />
+            <flag name="decode_PDF417" value="32" />
+        </attr>
+    </declare-styleable>
+</resources>

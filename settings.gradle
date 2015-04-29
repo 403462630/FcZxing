@@ -1,1 +1,1 @@
-include ':app', ':zxing_core'
+include ':app', ':zxing_core', ':fczxing_core'
