@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -45,6 +46,12 @@ public class FcScanView extends FrameLayout implements SurfaceHolder.Callback{
     }
 
     private ViewfinderView viewfinderView;
+
+    private FcScanListener fcScanListener;
+
+    public void setFcScanListener(FcScanListener fcScanListener) {
+        this.fcScanListener = fcScanListener;
+    }
 
     private boolean initialized;
     private boolean hasSurface;
@@ -98,7 +105,9 @@ public class FcScanView extends FrameLayout implements SurfaceHolder.Callback{
         boolean invertScan = a.getBoolean(R.styleable.FcScanView_invertScan, false);
         int frontLightMode = a.getInt(R.styleable.FcScanView_frontLightMode, 1);
         int decodeFormats = a.getInt(R.styleable.FcScanView_decodeFormat, 15);
+        float frameScale = a.getFloat(R.styleable.FcScanView_frameScale, CameraManager.DEFAULT_FRAMING_SCALE);
         a.recycle();
+        cameraManager.setFramingRectScale(frameScale);
 
         if ((decodeFormats & 0x20) == 32) {
             addDecodeFormats(DecodeFormatManager.PDF417_FORMATS);
@@ -200,13 +209,9 @@ public class FcScanView extends FrameLayout implements SurfaceHolder.Callback{
     }
 
     public void handleDecode(Result rawResult, Bitmap barcode, float scaleFactor) {
-//        inactivityTimer.onActivity();
-
-        boolean fromLiveScan = barcode != null;
-        if (fromLiveScan) {
-            beepManager.playBeepSoundAndVibrate();
-            Toast.makeText(getContext(), rawResult.getBarcodeFormat() + "; " + rawResult.getText(), Toast.LENGTH_SHORT).show();
-            restartPreviewAfterDelay(1000);
+        beepManager.playBeepSoundAndVibrate();
+        if (fcScanListener != null) {
+            fcScanListener.onHandleDecode(rawResult, barcode, scaleFactor);
         }
     }
 
@@ -241,6 +246,10 @@ public class FcScanView extends FrameLayout implements SurfaceHolder.Callback{
 
     public void setTorch(boolean isTorch) {
         cameraManager.setTorch(isTorch);
+    }
+
+    public static interface FcScanListener{
+        public void onHandleDecode(Result rawResult, Bitmap barcode, float scaleFactor);
     }
 
 }

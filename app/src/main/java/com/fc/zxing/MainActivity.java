@@ -1,17 +1,20 @@
 package com.fc.zxing;
 
+import android.graphics.Bitmap;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import fc.com.zxing.core.encode.QRCodeEncoder;
 import fc.com.zxing.core.view.FcScanView;
 
+import com.google.zxing.Result;
 import com.google.zxing.WriterException;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements FcScanView.FcScanListener {
     private FcScanView fcScanView;
     private ImageView imageView;
     @Override
@@ -19,6 +22,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         fcScanView = (FcScanView) findViewById(R.id.fc_scan_view);
+        fcScanView.setFcScanListener(this);
         fcScanView.initOnActivity(this);
         imageView = (ImageView) findViewById(R.id.iv_image);
 
@@ -51,5 +55,14 @@ public class MainActivity extends ActionBarActivity {
     protected void onDestroy() {
         super.onDestroy();
         fcScanView.release();
+    }
+
+    @Override
+    public void onHandleDecode(Result rawResult, Bitmap barcode, float scaleFactor) {
+        boolean fromLiveScan = barcode != null;
+        if (fromLiveScan) {
+            Toast.makeText(this, rawResult.getBarcodeFormat() + "; " + rawResult.getText(), Toast.LENGTH_SHORT).show();
+            fcScanView.restartPreviewAfterDelay(1000);
+        }
     }
 }

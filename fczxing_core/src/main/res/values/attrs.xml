@@ -5,6 +5,7 @@
         <attr name="vibrate" format="boolean"/>
         <attr name="playBeep" format="boolean"/>
         <attr name="invertScan" format="boolean"/>
+        <attr name="frameScale" format="float"/>
         <attr name="frontLightMode" format="enum">
             <enum name="on" value="0"/>
             <enum name="off" value="2"/>

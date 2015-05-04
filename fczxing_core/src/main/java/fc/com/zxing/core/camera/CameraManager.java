@@ -41,6 +41,7 @@ import java.io.IOException;
 public final class CameraManager {
 
     private static final String TAG = CameraManager.class.getSimpleName();
+    public static final float DEFAULT_FRAMING_SCALE = (float)5 / (float)8;
 
     private static final int MIN_FRAME_WIDTH = 240;
     private static final int MIN_FRAME_HEIGHT = 240;
@@ -235,8 +236,13 @@ public final class CameraManager {
         return framingRect;
     }
 
-    private static int findDesiredDimensionInRange(int resolution, int hardMin, int hardMax) {
-        int dim = 5 * resolution / 8; // Target 5/8 of each dimension
+    private float framingRectScale = DEFAULT_FRAMING_SCALE;
+    public void setFramingRectScale(float framingRectScale) {
+        this.framingRectScale = framingRectScale;
+    }
+
+    private int findDesiredDimensionInRange(int resolution, int hardMin, int hardMax) {
+        int dim = (int) (resolution * framingRectScale); // Target 5/8 of each dimension
         if (dim < hardMin) {
             return hardMin;
         }
