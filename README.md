@@ -4,8 +4,8 @@
 ```
 <fc.com.zxing.core.view.FcScanView
             android:id="@+id/fc_scan_view"
-            android:layout_width="300dp"
-            android:layout_height="400dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             scan:vibrate="false" 
             scan:playBeep="true"
             scan:invertScan="false"
