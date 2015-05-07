@@ -12,14 +12,13 @@
         android:gravity="center">
         <fc.com.zxing.core.view.FcScanView
             android:id="@+id/fc_scan_view"
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="400dp"
             scan:vibrate="false"
             scan:playBeep="true"
             scan:invertScan="false"
             scan:frontLightMode="off"
             scan:autoFocus="true"
-            scan:decodeFormat="decode_PDF417|decode_QR"
             scan:frameScale="0.63"/>
 
         <Button
@@ -28,9 +27,18 @@
             android:layout_height="45dp"
             android:visibility="visible"
             android:text="生成二维码"/>
+        <Button
+            android:id="@+id/bt_encode2"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:visibility="visible"
+            android:text="生成条形码"/>
         <ImageView
             android:id="@+id/iv_image"
-            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <ImageView
+            android:id="@+id/iv_image2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>

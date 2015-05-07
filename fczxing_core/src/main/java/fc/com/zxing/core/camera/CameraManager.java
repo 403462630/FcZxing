@@ -279,10 +279,10 @@ public final class CameraManager {
                 framingRectInPreview = rect;
             } else {
                 Rect rect1 = new Rect();
-                rect1.left = rect.top * cameraResolution.x / screenResolution.y;
-                rect1.right = rect.bottom * cameraResolution.x / screenResolution.y;
-                rect1.top = rect.left * cameraResolution.y / screenResolution.x;
-                rect1.bottom = rect.right * cameraResolution.y / screenResolution.x;
+                rect1.left = rect.left * cameraResolution.y / screenResolution.x;
+                rect1.right = rect.right * cameraResolution.y / screenResolution.x;
+                rect1.top = rect.top * cameraResolution.x / screenResolution.y;
+                rect1.bottom = rect.bottom * cameraResolution.x / screenResolution.y;
                 framingRectInPreview = rect1;
             }
         }
@@ -350,7 +350,8 @@ public final class CameraManager {
                 rect.width(), rect.height(), false);
     }
 
-    private boolean isLandscape = true;
+    public boolean isLandscape = true;
+    private int degrees = 0;
 
     public void setDisplayOrientation() {
         Camera.CameraInfo info = new Camera.CameraInfo();
@@ -358,7 +359,7 @@ public final class CameraManager {
 
         int rotation = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay()
                 .getRotation();
-        int degrees = 0;
+        degrees = 0;
         switch (rotation) {
             case Surface.ROTATION_0:
                 degrees = 0;

@@ -14,17 +14,21 @@ import java.util.Map;
 /**
  * Created by rjhy on 15-4-29.
  */
-public class QRCodeEncoder {
+public class BarcodeEncoder {
 
     private static final int WHITE = 0xFFFFFFFF;
     private static final int BLACK = 0xFF000000;
 
+    private int width;
+    private int height;
     private String content;
-    private int dimension;
+    private BarcodeFormat format;
 
-    public QRCodeEncoder(String content, int dimension) {
+    public BarcodeEncoder(String content, BarcodeFormat format, int width, int height) {
         this.content = content;
-        this.dimension = dimension;
+        this.width = width;
+        this.height = height;
+        this.format = format;
     }
 
     public Bitmap encodeAsBitmap() throws WriterException{
@@ -36,7 +40,7 @@ public class QRCodeEncoder {
         }
         BitMatrix result;
         try {
-            result = new MultiFormatWriter().encode(content, BarcodeFormat.QR_CODE, dimension, dimension, hints);
+            result = new MultiFormatWriter().encode(content, format, width, height, hints);
         } catch (IllegalArgumentException iae) {
             // Unsupported format
             return null;
